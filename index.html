@@ -908,7 +908,8 @@
     navigator.clipboard.writeText('mokev1n').then(() => {
       const val = el.querySelector('.contact-val');
       const orig = val.textContent;
-      val.textContent = '已复制 ✓';
+      const isEn = document.documentElement.lang === 'en';
+      val.textContent = isEn ? 'Copied ✓' : '已复制 ✓';
       setTimeout(() => { val.textContent = orig; }, 1800);
     });
   }
