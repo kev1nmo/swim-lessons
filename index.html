@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+  :root {
+    --sky: #38BDF8;
+    --ocean: #0EA5E9;
+    --deep: #0369A1;
+    --foam: #E0F7FF;
+    --sand: #FFF8ED;
+    --coral: #FF6B6B;
+    --gold: #FBBF24;
+    --text: #1a2b3c;
+    --muted: #5a7080;
+    --white: #ffffff;
+    --card-bg: #ffffff;
+    --wave-top: #e0f7ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', 'Nunito', sans-serif;
+    background: var(--foam);
+    color: var(--text);
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, #0EA5E9 0%, #0369A1 60%, #0c4a6e 100%);
+    padding: 48px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 60px;
+    background: var(--foam);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .lang-toggle {
+    position: absolute;
+    top: 16px; right: 16px;
+    display: flex;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .lang-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    background: transparent;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .lang-btn.active {
+    background: white;
+    color: var(--deep);
+  }
+  .avatar-ring {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.75);
+    margin: 0 auto 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    flex-shrink: 0;
+  }
+  .avatar-ring img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .hero .subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .hero-badges {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .badge {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-family: 'Nunito', sans-serif;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 28px 20px;
+  }
+  .section + .section {
+    border-top: 1px solid rgba(14,165,233,0.1);
+  }
+  .section-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 12px;
+  }
+  .section h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .section p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  /* CREDENTIALS */
+  .cred-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .cred-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid rgba(14,165,233,0.12);
+  }
+  .cred-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--foam);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .cred-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .cred-text span {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* RATE CARD */
+  .rate-card {
+    background: linear-gradient(135deg, var(--ocean), var(--deep));
+    border-radius: 18px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .rate-card::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .rate-card .price {
+    font-family: 'Nunito', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+  }
+  .rate-card .price-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+  .price-discount {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .rate-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+  .rate-feature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+  }
+  .rate-feature::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--sky);
+    flex-shrink: 0;
+  }
+
+  /* LOCATION */
+  .location-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid rgba(14,165,233,0.15);
+    overflow: hidden;
+  }
+  .map-placeholder {
+    height: 110px;
+    background: linear-gradient(135deg, #e0f7ff, #bae6fd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .map-pin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .pin-dot {
+    width: 20px; height: 20px;
+    background: var(--coral);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(255,107,107,0.4);
+  }
+  .pin-shadow {
+    width: 10px; height: 4px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 50%;
+  }
+  .location-details {
+    padding: 8px 14px 10px;
+  }
+  .location-details .loc-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .location-details .loc-sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* FAQ */
+  .faq-item {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(14,165,233,0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .faq-item.open {
+    border-color: rgba(14,165,233,0.35);
+  }
+  .faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    gap: 8px;
+  }
+  .faq-arrow {
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--foam);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--ocean);
+    transition: transform 0.25s, background 0.2s;
+  }
+  .faq-item.open .faq-arrow {
+    transform: rotate(180deg);
+    background: var(--ocean);
+    color: white;
+  }
+  .faq-a {
+    display: none;
+    padding: 0 16px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    border-top: 1px solid rgba(14,165,233,0.08);
+    padding-top: 10px;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* CTA */
+  .cta-section {
+    padding: 24px 20px 36px;
+    text-align: center;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--ocean);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 4px 20px rgba(14,165,233,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .cta-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 12px rgba(14,165,233,0.25);
+  }
+  .cta-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    font-size: 11px;
+    padding: 16px 20px;
+  }
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  /* ── DESKTOP RESPONSIVE ── */
+  @media (min-width: 680px) {
+    /* Hero — larger, more breathing room */
+    .hero {
+      padding: 72px 48px 100px;
+    }
+    .hero::before {
+      height: 80px;
+    }
+    .avatar-ring {
+      width: 140px;
+      height: 140px;
+      margin-bottom: 20px;
+      border-width: 5px;
+    }
+    .hero h1 {
+      font-size: 40px;
+    }
+    .hero .subtitle {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      font-size: 13px;
+      padding: 6px 16px;
+    }
+
+    /* Sections — wider padding */
+    .section {
+      padding: 40px 48px;
+    }
+    .section h2 {
+      font-size: 24px;
+    }
+    .section p {
+      font-size: 15px;
+    }
+
+    /* Credentials — 2-column grid */
+    .cred-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .cred-item {
+      padding: 16px;
+    }
+    .cred-text {
+      font-size: 14px;
+    }
+    .cred-text span {
+      font-size: 13px;
+    }
+
+    /* Rates + Location — side by side */
+    .rates-location-row {
+      display: flex;
+      align-items: stretch;
+      border-top: 1px solid rgba(14,165,233,0.1);
+    }
+    .rates-location-row .section {
+      flex: 1;
+    }
+    .rates-location-row .section + .section {
+      border-top: none;
+      border-left: 1px solid rgba(14,165,233,0.1);
+    }
+    .rate-card .price {
+      font-size: 60px;
+    }
+    .rate-features {
+      gap: 10px;
+    }
+    .rate-feature {
+      font-size: 14px;
+    }
+    .location-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .map-placeholder {
+      height: 140px;
+      flex: 1;
+    }
+
+    /* FAQ — wider */
+    .faq-q {
+      font-size: 14px;
+      padding: 16px 20px;
+    }
+    .faq-a {
+      font-size: 14px;
+      padding: 0 20px 16px;
+      padding-top: 12px;
+    }
+
+    /* CTA */
+    .cta-section {
+      padding: 40px 48px 56px;
+    }
+    .cta-btn {
+      width: auto;
+      min-width: 280px;
+      font-size: 16px;
+      padding: 16px 48px;
+    }
+    .cta-section h2 {
+      font-size: 22px;
+    }
+
+    /* Footer */
+    footer {
+      font-size: 12px;
+      padding: 20px;
+    }
+  }
+
+  /* HERO BOOK BUTTON */
+  .hero-book-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ocean);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 13px 36px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(14,165,233,0.38);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+  }
+  .hero-book-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 26px rgba(14,165,233,0.48);
+  }
+  .hero-book-btn:active { transform: scale(0.97); }
+
+  /* MARINE DECORATIONS */
+  .sea-deco {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.6;
+    animation: sea-float 7s ease-in-out infinite;
+  }
+  @keyframes sea-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    40%       { transform: translateY(-12px) rotate(6deg); }
+    70%       { transform: translateY(-6px) rotate(-4deg); }
+  }
+
+  /* MAP SVG */
+  .map-placeholder {
+    height: 150px;
+    overflow: hidden;
+    display: block;
+    background: #d7edc0;
+  }
+  .map-placeholder svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* CONTACT ROW */
+  .contact-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 1.5px solid rgba(14,165,233,0.2);
+    border-radius: 16px;
+    padding: 14px 22px;
+    min-width: 175px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .contact-card:hover {
+    border-color: var(--ocean);
+    box-shadow: 0 4px 18px rgba(14,165,233,0.18);
+  }
+  .contact-icon { font-size: 26px; }
+  .contact-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 2px;
+  }
+  .contact-val {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ocean);
+  }
+  .copy-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      padding: 88px 80px 120px;
+    }
+    .hero h1 {
+      font-size: 48px;
+    }
+    .hero .subtitle {
+      font-size: 17px;
+    }
+    .section {
+      padding: 44px 64px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('zh')" id="btn-zh">中文</button>
+    <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+  </div>
+
+  <!-- Marine decorations — kept to the far edges so they never overlap the center content -->
+  <span class="sea-deco" style="left:6%;top:38%;font-size:35px;animation-delay:0s">🐠</span>
+  <span class="sea-deco" style="right:9%;top:25%;font-size:35px;animation-delay:1.8s">🐬</span>
+  <span class="sea-deco" style="left:7%;bottom:20%;font-size:35px;animation-delay:3.2s">🐙</span>
+  <span class="sea-deco" style="right:10%;bottom:25%;font-size:35px;animation-delay:2.5s">🐟</span>
+  <span class="sea-deco" style="left:10%;top:10%;font-size:35px;animation-delay:4s">🦀</span>
+
+  <div class="avatar-ring">
+    <img src="kevin.png" alt="Coach Kevin Mo">
+  </div>
+  <h1 class="zh">莫教练游泳课</h1>
+  <h1 class="en" style="display:none">Coach Kevin's Swim Lessons</h1>
+  <p class="subtitle zh">专业私教 · 2026 暑假 · 达卢斯/约翰斯克里克</p>
+  <p class="subtitle en" style="display:none">Private Lessons · Summer 2026 · Duluth / Johns Creek</p>
+  <div class="hero-badges">
+    <span class="badge zh">5年+ 私教经验</span>
+    <span class="badge zh">Lifetime Fitness 教练</span>
+    <span class="badge zh">州冠军游泳队长</span>
+    <span class="badge zh">Georgia Tech 学生</span>
+    <span class="badge en" style="display:none">5+ Yrs Private Coaching</span>
+    <span class="badge en" style="display:none">Lifetime Fitness Coach</span>
+    <span class="badge en" style="display:none">State Champion Captain</span>
+    <span class="badge en" style="display:none">Georgia Tech Student</span>
+  </div>
+</div>
+
+<!-- BOOK NOW BAR -->
+<div style="text-align:center;padding:0px 20px 4px;">
+  <a class="hero-book-btn" href="#cta-section">
+    <span class="zh">立即预约 ↓</span>
+    <span class="en" style="display:none">Book Now ↓</span>
+  </a>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+  <p class="section-label zh">关于教练</p>
+  <p class="section-label en" style="display:none">About Coach Kevin</p>
+  <h2 class="zh">专业背景，值得信赖</h2>
+  <h2 class="en" style="display:none">Expertise You Can Trust</h2>
+  <div class="cred-list">
+    <div class="cred-item">
+      <div class="cred-icon">🏊</div>
+      <div class="cred-text zh">竞技游泳 12年+ 经历<span>扎实技术基础，全面了解各年龄段游泳发展</span></div>
+      <div class="cred-text en" style="display:none">12+ Years Competitive Swimming<span>Strong technical foundation across all age groups</span></div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">🏆</div>
+      <div class="cred-text zh">州冠军游泳队长<span>带领队伍夺得州级冠军，具备卓越领导力</span></div>
+      <div class="cred-text en" style="display:none">Varsity Captain & State Champion<span>Led team to state championship titles</span></div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">🎽</div>
+      <div class="cred-text zh">前 Lifetime Fitness 游泳教练<span>水中正式教学认证，有团队及私教经验</span></div>
+      <div class="cred-text en" style="display:none">Former Lifetime Fitness Instructor<span>Certified in-water instruction, group & private</span></div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">👦</div>
+      <div class="cred-text zh">5年+ 私教经验<span>适合各年龄段，初学者到进阶均可</span></div>
+      <div class="cred-text en" style="display:none">5+ Years Private Coaching<span>All ages welcome — beginner to competitive</span></div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">🎓</div>
+      <div class="cred-text zh">Georgia Tech 学生<span>以同样的严谨与拼搏精神投入每一堂课</span></div>
+      <div class="cred-text en" style="display:none">Georgia Tech Student<span>Brings the same discipline and work ethic to every lesson</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- RATES + LOCATION ROW -->
+<div class="rates-location-row">
+<!-- RATES -->
+<div class="section">
+  <p class="section-label zh">收费标准</p>
+  <p class="section-label en" style="display:none">Rates</p>
+  <div class="rate-card">
+    <div class="price">$40</div>
+    <div class="price-label zh">每节课 30 分钟 一对一 </div>
+    <div class="price-label en" style="display:none">per 30-minute one-on-one lesson</div>
+    <div class="price-discount zh">长期学员可享优惠，详情请咨询</div>
+    <div class="price-discount en" style="display:none">Discounts available for recurring students — ask for details</div>
+    <div class="rate-features">
+      <div class="rate-feature zh">一对一专注辅导，因材施教</div>
+      <div class="rate-feature zh">全四泳姿教学，技术全面提升</div>
+      <div class="rate-feature zh">适合初学者至竞技进阶</div>
+      <div class="rate-feature zh">灵活排课，配合您的时间</div>
+      <div class="rate-feature en" style="display:none">One-on-one personalized instruction</div>
+      <div class="rate-feature en" style="display:none">All four strokes covered</div>
+      <div class="rate-feature en" style="display:none">Beginner to competitive levels</div>
+      <div class="rate-feature en" style="display:none">Flexible scheduling to fit your family</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<div class="section">
+  <p class="section-label zh">上课地点</p>
+  <p class="section-label en" style="display:none">Location</p>
+  <div class="location-card">
+    <div class="map-placeholder">
+      <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Base terrain -->
+        <rect width="400" height="150" fill="#c8e6b0"/>
+        <!-- Varied green patches for depth -->
+        <ellipse cx="60" cy="30" rx="80" ry="40" fill="#b5d99a"/>
+        <ellipse cx="340" cy="120" rx="90" ry="45" fill="#b5d99a"/>
+        <ellipse cx="200" cy="75" rx="70" ry="35" fill="#d4eebc"/>
+        <ellipse cx="380" cy="30" rx="50" ry="30" fill="#bfe0a5"/>
+        <ellipse cx="20" cy="130" rx="55" ry="28" fill="#bfe0a5"/>
+        <!-- Chattahoochee River — dark edge then lighter fill -->
+        <path d="M0,108 Q40,96 80,104 Q120,112 160,98 Q200,84 240,92 Q280,100 320,84 Q355,70 400,76" stroke="#5aade0" stroke-width="16" fill="none" stroke-linecap="round"/>
+        <path d="M0,108 Q40,96 80,104 Q120,112 160,98 Q200,84 240,92 Q280,100 320,84 Q355,70 400,76" stroke="#8ecfe8" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M0,108 Q40,96 80,104 Q120,112 160,98 Q200,84 240,92 Q280,100 320,84 Q355,70 400,76" stroke="#b8e4f4" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <!-- Pin — positioned above the river -->
+        <circle cx="200" cy="45" r="15" fill="white" opacity="0.9"/>
+        <path d="M200,32 C194,32 188,38 188,45 C188,54 200,64 200,64 C200,64 212,54 212,45 C212,38 206,32 200,32Z" fill="#e53935"/>
+        <circle cx="200" cy="44" r="4.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="location-details">
+      <div class="loc-name zh">2800 Girard Ln, Duluth, GA 30097</div>
+      <div class="loc-name en" style="display:none">2800 Girard Ln, Duluth, GA 30097</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /rates-location-row -->
+
+<!-- FAQ -->
+<div class="section">
+  <p class="section-label zh">常见问题</p>
+  <p class="section-label en" style="display:none">FAQ</p>
+
+  <!-- 1. How to book -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">如何预约？</span>
+      <span class="en" style="display:none">How do I book?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">可直接通过微信或短信联系预约，时间灵活协商。</span>
+      <span class="en" style="display:none">Reach out via WeChat or text to schedule — timing is flexible.</span>
+    </div>
+  </div>
+
+  <!-- 2. Age groups -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">适合什么年龄的孩子？</span>
+      <span class="en" style="display:none">What age groups do you teach?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">适合各年龄段儿童，从幼儿（建议3岁以上）到青少年均可。无论是完全零基础还是希望提升竞技水平，都欢迎咨询。</span>
+      <span class="en" style="display:none">All ages are welcome! I typically work with kids 3 and up, from absolute beginners to teenagers looking to improve their competitive technique.</span>
+    </div>
+  </div>
+
+  <!-- 3. Beginners -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">零基础可以报名吗？</span>
+      <span class="en" style="display:none">Can beginners join with zero experience?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">完全可以！我擅长帮助初学者克服对水的恐惧，从水中适应、基础浮水到完整泳姿，循序渐进、安全有趣。</span>
+      <span class="en" style="display:none">Absolutely! I specialize in helping beginners feel comfortable in the water — from getting used to submersion all the way through learning full strokes, step by step.</span>
+    </div>
+  </div>
+
+  <!-- 4. Discounts -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">多节课有优惠吗？</span>
+      <span class="en" style="display:none">Are there discounts for multiple lessons?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">长期学员可享有优惠，详情请咨询。</span>
+      <span class="en" style="display:none">Discounts are available for recurring students — reach out for details.</span>
+    </div>
+  </div>
+
+  <!-- 5. Location -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">上课地点在哪里？需要准备什么？</span>
+      <span class="en" style="display:none">Where are lessons held? What to bring?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">课程在 2800 Girard Ln, Duluth, GA 30097。 孩子需携带泳衣、泳镜和毛巾，其他设备将予提供。</span>
+      <span class="en" style="display:none">Lessons take place at 2800 Girard Ln, Duluth, GA 30097. Students should bring a swimsuit, goggles, and towel. Other equipment will be provided.</span>
+    </div>
+  </div>
+
+  <!-- 6. Cancellation -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">如果当天有事需要取消怎么办？</span>
+      <span class="en" style="display:none">What is the cancellation policy?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">请尽量提前24小时告知，以便重新安排。理解突发情况，我们会尽力灵活处理。</span>
+      <span class="en" style="display:none">Please try to let me know at least 24 hours in advance so we can reschedule. I understand life happens and will do my best to be flexible.</span>
+    </div>
+  </div>
+
+  <!-- 7. Group lessons -->
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span class="zh">可以多人一起上课吗？</span>
+      <span class="en" style="display:none">Are group lessons available?</span>
+      <div class="faq-arrow">▾</div>
+    </div>
+    <div class="faq-a">
+      <span class="zh">出于安全考虑，我们通常以一对一教学为主，以确保每位学员都能获得充分关注。但如果孩子已有一定游泳基础，可以例外安排小组课，具体可联系我商量。</span>
+      <span class="en" style="display:none">For safety reasons, I typically teach one-on-one so every student gets full attention in the water. That said, exceptions can be made for kids who are already more advanced swimmers — feel free to reach out and we can discuss what works best.</span>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="cta-section">  
+  <p class="section-label" style="text-align:center; margin-bottom: 8px;">
+    <span class="zh">立即预约</span>
+    <span class="en" style="display:none">Book a Lesson</span>
+  </p>
+  <h2 style="font-family:'Nunito',sans-serif; font-size:18px; font-weight:800; margin-bottom:16px;">
+    <span class="zh">这个夏天，让孩子爱上游泳！🌊</span>
+    <span class="en" style="display:none">Make this summer count! 🌊</span>
+  </h2>
+  <div class="contact-row">
+    <a class="contact-card" href="tel:4704895138">
+      <span class="contact-icon">📞</span>
+      <div>
+        <div class="contact-label zh">电话 / 短信</div>
+        <div class="contact-label en" style="display:none">Call / Text</div>
+        <div class="contact-val">(470) 489-5138</div>
+      </div>
+    </a>
+    <div class="contact-card" onclick="copyWechat(this)">
+      <span class="contact-icon">💬</span>
+      <div>
+        <div class="contact-label zh">微信 ID</div>
+        <div class="contact-label en" style="display:none">WeChat ID</div>
+        <div class="contact-val">mokev1n</div>
+      </div>
+    </div>
+  </div>
+  <p class="copy-hint zh">点击微信卡片可复制 ID</p>
+  <p class="copy-hint en" style="display:none">Tap the WeChat card to copy ID</p>
+  <p class="cta-note zh" style="margin-top:14px">莫教练 · 达卢斯/约翰斯克里克 · 暑期限额招募中</p>
+  <p class="cta-note en" style="display:none;margin-top:14px">Coach Kevin Mo · Duluth / Johns Creek · Limited summer spots</p>
+</div>
+
+<footer>
+  <strong>Kevin Mo</strong> · <span class="zh">私人游泳教练</span><span class="en" style="display:none">Private Swim Coach</span> · Duluth / Johns Creek, GA
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('.zh').forEach(el => el.style.display = lang === 'zh' ? '' : 'none');
+    document.querySelectorAll('.en').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang === 'zh' ? 'zh' : 'en';
+  }
+
+  function copyWechat(el) {
+    navigator.clipboard.writeText('mokev1n').then(() => {
+      const val = el.querySelector('.contact-val');
+      const orig = val.textContent;
+      val.textContent = '已复制 ✓';
+      setTimeout(() => { val.textContent = orig; }, 1800);
+    });
+  }
+
+  function toggleFaq(el) {
+    const wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) el.classList.add('open');
+  }
+</script>
+</body>
+</html>
