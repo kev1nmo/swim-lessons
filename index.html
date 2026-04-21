@@ -22,6 +22,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Noto Sans SC', 'Nunito', sans-serif;
@@ -660,7 +661,7 @@
 
 <!-- BOOK NOW BAR -->
 <div style="text-align:center;padding:0px 20px 4px;">
-  <a class="hero-book-btn" href="#cta-section">
+  <a class="hero-book-btn" href="javascript:void(0)" onclick="document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})">
     <span class="zh">立即预约 ↓</span>
     <span class="en" style="display:none">Book Now ↓</span>
   </a>
